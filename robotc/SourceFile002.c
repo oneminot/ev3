@@ -7,8 +7,10 @@
 
 task main()
 {
-	displayBigTextLine(4, "screw you");
-	displayBigTextLine(6, "guys, ");
-	displayBigTextLine(10, "I'm going home!");
-	sleep(50000);
+	setMotorSyncEncoder(LeftTire, RightTire, 0, 360, 50);
+	while (getMotorRunning(LeftTire))
+	{
+		playTone(180, 1000);
+
+	}
 }
