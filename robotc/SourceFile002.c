@@ -12,29 +12,29 @@ task main()
 
 	motor[LeftTire]=20;
 	motor[RightTire]=20;
-
-	while (getMotorEncoder(LeftTire) < 1000)
+	while(SensorValue(ColorSensor) < 20)
 	{
+
 	}
-
-	motor[LeftTire]=0;
-	motor[RightTire]=0;
-	displayBigTextLine(1,"left -> %d",getMotorEncoder(LeftTire));
-	displayBigTextLine(4,"right -> %d",getMotorEncoder(RightTire));
-
-	sleep(5000);
-
-	resetMotorEncoder(LeftTire);
-	resetMotorEncoder(RightTire);
-
-	setMotorSyncEncoder(LeftTire,RightTire,0,1000,100);
-
-	while (getMotorRunning(LeftTire))
+	motor[LeftTire] = 0;
+	motor[RightTire] = 0;
+	sleep(500);
+	while(SensorValue(ColorSensor) > 18)
 	{
+		motor[LeftTire] = 10;
+		motor[RightTire] = -10;
 	}
+	motor[LeftTire]=20;
+	motor[RightTire]=20;
+	while(SensorValue(ColorSensor) < 20)
+	{
 
-	displayBigTextLine(1,"left -> %d",getMotorEncoder(LeftTire));
-	displayBigTextLine(4,"right -> %d",getMotorEncoder(RightTire));
-
-	sleep(5000);
+	}
+	motor[LeftTire]=20;
+	motor[RightTire]=20;
+	//while(true)
+	//{
+	//	int x = SensorValue(ColorSensor);
+	//	displayBigTextLine(2, "Color value: %d", x);
+	//}
 };
