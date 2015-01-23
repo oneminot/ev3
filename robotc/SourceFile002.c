@@ -7,11 +7,11 @@
 
 task main()
 {
-		resetMotorEncoder(LeftTire);
+	resetMotorEncoder(LeftTire);
 	resetMotorEncoder(RightTire);
 
-	motor[LeftTire]=100;
-	motor[RightTire]=100;
+	motor[LeftTire]=20;
+	motor[RightTire]=20;
 
 	while (getMotorEncoder(LeftTire) < 1000)
 	{
@@ -22,9 +22,9 @@ task main()
 	displayBigTextLine(1,"left -> %d",getMotorEncoder(LeftTire));
 	displayBigTextLine(4,"right -> %d",getMotorEncoder(RightTire));
 
-  sleep(5000);
+	sleep(5000);
 
-  resetMotorEncoder(LeftTire);
+	resetMotorEncoder(LeftTire);
 	resetMotorEncoder(RightTire);
 
 	setMotorSyncEncoder(LeftTire,RightTire,0,1000,100);
@@ -36,6 +36,5 @@ task main()
 	displayBigTextLine(1,"left -> %d",getMotorEncoder(LeftTire));
 	displayBigTextLine(4,"right -> %d",getMotorEncoder(RightTire));
 
-  sleep(5000);
+	sleep(5000);
 };
-
