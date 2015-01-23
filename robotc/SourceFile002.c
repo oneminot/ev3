@@ -7,10 +7,35 @@
 
 task main()
 {
-	setMotorSyncEncoder(LeftTire, RightTire, 0, 360, 50);
+		resetMotorEncoder(LeftTire);
+	resetMotorEncoder(RightTire);
+
+	motor[LeftTire]=100;
+	motor[RightTire]=100;
+
+	while (getMotorEncoder(LeftTire) < 1000)
+	{
+	}
+
+	motor[LeftTire]=0;
+	motor[RightTire]=0;
+	displayBigTextLine(1,"left -> %d",getMotorEncoder(LeftTire));
+	displayBigTextLine(4,"right -> %d",getMotorEncoder(RightTire));
+
+  sleep(5000);
+
+  resetMotorEncoder(LeftTire);
+	resetMotorEncoder(RightTire);
+
+	setMotorSyncEncoder(LeftTire,RightTire,0,1000,100);
+
 	while (getMotorRunning(LeftTire))
 	{
-		playTone(180, 1000);
-
 	}
-}
+
+	displayBigTextLine(1,"left -> %d",getMotorEncoder(LeftTire));
+	displayBigTextLine(4,"right -> %d",getMotorEncoder(RightTire));
+
+  sleep(5000);
+};
+
