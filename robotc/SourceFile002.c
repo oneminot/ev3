@@ -49,17 +49,55 @@ task main()
 {
 	resetMotorEncoder(LeftTire);
 	resetMotorEncoder(RightTire);
-
 	while(true)
 	{
 		motor[LeftTire]=90;
 		motor[RightTire]=90;
-		while(SensorValue(ColorSensor) < 20){}
+		while(SensorValue(ColorSensor) < 14){setMotorSyncEncoder(LeftTire, RightTire, 0, 1000, 90);}
 		motor[LeftTire] = 0;
 		motor[RightTire] = 0;
-		while(SensorValue(ColorSensor) > 18)
+		while(SensorValue(ColorSensor) > 14)
 		{
-			moveMotorTarget(LeftTire, 60, 60);
+			moveMotorTarget(LeftTire, 80, 40);
+			//while(getMotorRunning(LeftTire)){
+			//if(SensorValue(ColorSensor) < 14){break;}}
+			while (getMotorMoving(LeftTire))
+			{
+				if (SensorValue(ColorSensor) < 14)
+				{
+					break;
+				}
+			}
+			moveMotorTarget(LeftTire, 80, -40);
+			while (getMotorMoving(LeftTire))
+			{
+				if (SensorValue(ColorSensor) < 14)
+				{
+					break;
+				}
+			}
+			break;
+		}
+		while(SensorValue(ColorSensor) > 14)
+		{
+
+			moveMotorTarget(RightTire, 80, 40);
+			while (getMotorMoving(RightTire))
+			{
+				if (SensorValue(ColorSensor) < 14)
+				{
+					break;
+				}
+			}
+			moveMotorTarget(RightTire, 80, -40);
+			while (getMotorMoving(RightTire))
+			{
+				if (SensorValue(ColorSensor) < 14)
+				{
+					break;
+				}
+			}
+			break;
 		}
 	}
 };
