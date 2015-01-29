@@ -20,30 +20,29 @@ task main()
 		displayBigTextLine(8, "%d", colorSensorValue);
 		if(getColorReflected(ColorSensor) > iStopColorSensor && SensorValue(LightSensor) > iStopLightSensor)
 		{
-			setMotorSyncEncoder(LeftTire, RightTire, 0, 60, 50);
+			setMotorSyncEncoder(LeftTire, RightTire, 0, 360, 50);
 		}
-		else if(getColorReflected(ColorSensor) < iStopColorSensor)
-		{
-			moveMotorTarget(LeftTire, 80, 40);
-			while (getMotorMoving(LeftTire))
-			{
-				if (SensorValue(ColorSensor) < iStopColorSensor)
-				{
-					break;
-				}
-			}
-		}
-		else if(SensorValue(LightSensor) < iStopLightSensor)
-		{
-			moveMotorTarget(LeftTire, 80, 40);
-			while (getMotorMoving(LeftTire))
-			{
-				if (SensorValue(ColorSensor) < iStopLightSensor)
-				{
-					break;
-				}
-			}
-		}
+	//	else if(getColorReflected(ColorSensor) < iStopColorSensor)
+	//	{
+	//		moveMotorTarget(LeftTire, 80, 40);
+	//		while (getMotorMoving(LeftTire))
+	//		{
+	//			if (SensorValue(ColorSensor) < iStopColorSensor)
+	//			{
+	//				break;
+	//			}
+	//		}
+	//	}
+	//	else if(SensorValue(LightSensor) < iStopLightSensor)
+	//	{
+	//		moveMotorTarget(LeftTire, 80, 40);
+	//		while (getMotorMoving(LeftTire))
+	//		{
+	//			if (SensorValue(ColorSensor) < iStopLightSensor)
+	//			{
+	//				break;
+	//			}
+	//		}
+	//	}
 	}
-
 };
