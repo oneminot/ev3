@@ -24,23 +24,14 @@ task main()
 		if(boolTurnedFront && !boolTurnedLeft && !boolTurnedRight)
 		{
 			setMotorTarget(Arm, -90, 15);
-			//boolTurnedFront = false;
-			//boolTurnedLeft = true;
-			//boolTurnedRight = false;
 		}
 		else if(!boolTurnedFront && boolTurnedLeft && !boolTurnedRight)
 		{
 			setMotorTarget(Arm, +90, 15);
-			//boolTurnedFront = true;
-			//boolTurnedLeft = false;
-			//boolTurnedRight = false;
 		}
 		else if(boolTurnedFront && !boolTurnedLeft && !boolTurnedRight)
 		{
 			setMotorTarget(Arm, +90, 15);
-			//boolTurnedFront = false;
-			//boolTurnedLeft = false;
-			//boolTurnedRight = true;
 		}
 		if(getUSDistance(UltrasonicSensor) < MaxDistance)
 		{
