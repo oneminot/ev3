@@ -16,35 +16,31 @@ void ResetAllMotorEncoders()
 	resetMotorEncoder(RightMotor);
 }
 
-int GetSensorReading()
+void ResetSensorLocation()
 {
-	if(boolTurnedFront && !boolTurnedLeft && !boolTurnedRight)
-		{
-			setMotorTarget(Arm, -90, 15);
-			return -1;
-		}
-		else if(!boolTurnedFront && boolTurnedLeft && !boolTurnedRight)
-		{
-			setMotorTarget(Arm, +90, 15);
-			return 0;
-		}
-		else if(boolTurnedFront && !boolTurnedLeft && !boolTurnedRight)
-		{
-			setMotorTarget(Arm, +90, 15);
-			return +1;
-		}
-		return -2;
+	motor[Arm] = -50;
+	sleep(1000);
+	motor[Arm] = 0;
+	ResetAllMotorEncoders();
+	displayBigTextLine(10, "Hello guys");
+	setMotorTarget(Arm, 105, 15);
+	while(getMotorRunning(Arm))
+	{
+		//do nothing
+	}
 }
 
 task main()
 {
-	while(true)
-	{
-		ResetAllMotorEncoders();
-		GetSensorReading();
-		if(getUSDistance(UltrasonicSensor) < MaxDistance)
-		{
-			setMotorSyncEncoder(LeftMotor, RightMotor, 0, 360, 60);
-		}
-	}
+	ResetSensorLocation();
+	//while(true)
+	//{
+		//ResetAllMotorEncoders();
+	//	GetSensorReading();
+	//	if(getUSDistance(UltrasonicSensor) < MaxDistance)
+	//	{
+	//		sleep(5000);
+	//		setMotorSyncEncoder(LeftMotor, RightMotor, 0, 360, 60);
+	//	}
+	//}
 }
