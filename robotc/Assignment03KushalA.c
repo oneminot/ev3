@@ -22,7 +22,7 @@ void ResetSensorLocation()
 	sleep(1000);
 	motor[Arm] = 0;
 	ResetAllMotorEncoders();
-	displayBigTextLine(10, "Hello guys");
+	displayBigTextLine(10, "Let's face front!");
 	setMotorTarget(Arm, 105, 15);
 	while(getMotorRunning(Arm))
 	{
@@ -33,14 +33,14 @@ void ResetSensorLocation()
 task main()
 {
 	ResetSensorLocation();
-	//while(true)
-	//{
-		//ResetAllMotorEncoders();
-	//	GetSensorReading();
-	//	if(getUSDistance(UltrasonicSensor) < MaxDistance)
-	//	{
-	//		sleep(5000);
-	//		setMotorSyncEncoder(LeftMotor, RightMotor, 0, 360, 60);
-	//	}
-	//}
+	while(true)
+	{
+		ResetAllMotorEncoders();
+		GetSensorReading();
+		if(getUSDistance(UltrasonicSensor) < MaxDistance)
+		{
+			sleep(5000);
+			setMotorSyncEncoder(LeftMotor, RightMotor, 0, 360, 60);
+		}
+	}
 }
