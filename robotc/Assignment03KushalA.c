@@ -36,7 +36,6 @@ task main()
 	while(true)
 	{
 		ResetAllMotorEncoders();
-		GetSensorReading();
 		if(getUSDistance(UltrasonicSensor) < MaxDistance)
 		{
 			sleep(5000);
