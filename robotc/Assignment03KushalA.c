@@ -103,7 +103,14 @@ void MoveForward()
 {
 	sleep(intLongWait);
 	ResetAllMotorEncoders();
-	setMotorSyncEncoder(LeftMotor, RightMotor, 0, 180, 50);
+	if(intFrontDistance > 200 && intLeftDistance < MaxDistance)
+	{
+		setMotorSyncEncoder(LeftMotor, RightMotor, 0, 720, 50);
+	}
+	else
+	{
+		setMotorSyncEncoder(LeftMotor, RightMotor, 0, 180, 50);
+	}
 }
 
 void MoveBack()
@@ -133,6 +140,7 @@ void GetDistances()
 
 task main()
 {
+	displayString(1, "hello");
 	ResetSensorLocation();
 	while(true)
 	{

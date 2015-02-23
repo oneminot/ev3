@@ -6,6 +6,7 @@
 
 int MaxFrontDistance = 250;
 int Max = 255;
+int intSensorWait = 2000;
 int MaxDistance = 21;
 int MinDistance = 10;
 bool boolTurnedRight = false;
@@ -27,23 +28,25 @@ void ResetAllMotorEncoders()
 void ResetSensorLocation()
 {
 	motor[Arm] = -50;
-	sleep(1000);
+	sleep(intSensorWait);
 	motor[Arm] = 0;
 	ResetAllMotorEncoders();
 	displayTextLine(10, "Let's face front!");
 	setMotorTarget(Arm, 105, 15);
+	setLEDColor(ledGreen);
 	while(getMotorRunning(Arm))
 	{
 		//do nothing
-		setLEDColor(ledOrangePulse);
-
+		sleep(intSensorWait);
+		setLEDColor(ledOrange);
 	}
+	setLEDColor(ledGreenFlash);
 }
 
 void TurnSensorLeft()
 {
 	motor[Arm] = -50;
-	sleep(1000);
+	sleep(intSensorWait);
 	motor[Arm] = 0;
 	ResetAllMotorEncoders();
 }
@@ -51,7 +54,7 @@ void TurnSensorLeft()
 void TurnSensorRight()
 {
 	motor[Arm] = 50;
-	sleep(1000);
+	sleep(intSensorWait);
 	motor[Arm] = 0;
 	ResetAllMotorEncoders();
 }
@@ -81,7 +84,7 @@ void GetFrontDistance()
 
 void MoveForwardALot()
 {
-	if(intFrontDistance > MaxFrontDistance && intFrontDistance < Max)
+	if(intFrontDistance > MaxFrontDistance)
 	{
 		sleep(intLongWait);
 		ResetAllMotorEncoders();
