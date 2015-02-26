@@ -33,14 +33,14 @@ void ResetSensorLocation()
 	ResetAllMotorEncoders();
 	//displayTextLine(10, "Let's face front!");
 	setMotorTarget(Arm, 105, 15);
-	setLEDColor(ledGreen);
+	//setLEDColor(ledGreen);
 	while(getMotorRunning(Arm))
 	{
 		//do nothing
 		sleep(intSensorWait);
 		//setLEDColor(ledOrange);
 	}
-	setLEDColor(ledGreenFlash);
+	//setLEDColor(ledGreenFlash);
 }
 
 void TurnSensorLeft()
