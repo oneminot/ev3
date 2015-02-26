@@ -187,10 +187,6 @@ task main()
 		{
 			MoveBack();
 		}
-		else if (isMoveForwardPossible())
-		{
-			MoveForward();
-		}
 		else if (isRightTurnPossible())
 		{
 			MoveRight();
@@ -198,6 +194,10 @@ task main()
 		else if (isLeftTurnPossible())
 		{
 			MoveLeft();
+		}
+		else if (isMoveForwardPossible())
+		{
+			MoveForward();
 		}
 	}
 }
