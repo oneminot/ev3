@@ -168,7 +168,7 @@ bool isRightTurnPossible()
 
 bool isMoveForwardPossible()
 {
-	if(intFrontDistance >= MinDistance && intFrontDistance <= MaxDistance && intLeftDistance >= MinDistance && intRightDistance >= MinDistance)
+	if(intFrontDistance >= MinDistance && intLeftDistance >= MinDistance && intRightDistance >= MinDistance)
 	{
 		return true;
 	}
@@ -187,7 +187,7 @@ task main()
 		{
 			MoveBack();
 		}
-				else if (isMoveForwardPossible())
+		else if (isMoveForwardPossible())
 		{
 			MoveForward();
 		}
