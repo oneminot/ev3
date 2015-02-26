@@ -150,7 +150,7 @@ void GetDistances()
 
 bool isLeftTurnPossible()
 {
-	if(intRightDistance <= MinDistance || intLeftDistance > MaxDistance)
+	if(intRightDistance <= MinDistance || intLeftDistance >= MaxDistance)
 	{
 		return true;
 	}
@@ -159,7 +159,7 @@ bool isLeftTurnPossible()
 
 bool isRightTurnPossible()
 {
-	if(intLeftDistance <= MinDistance || intRightDistance > MaxDistance)
+	if(intLeftDistance <= MinDistance || intRightDistance >= MaxDistance)
 	{
 		return true;
 	}
