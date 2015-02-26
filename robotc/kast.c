@@ -98,7 +98,7 @@ void MoveLeft()
 	sleep(intLongWait);
 	ResetAllMotorEncoders();
 	motor[RightMotor] =  30;
-	motor[LeftMotor] = -10;
+	motor[LeftMotor] = -30;
 	sleep(intShortWait);
 	motor[LeftMotor] = 0;
 	motor[RightMotor] = 0;
@@ -109,7 +109,7 @@ void MoveRight()
 	sleep(intLongWait);
 	ResetAllMotorEncoders();
 	motor[LeftMotor] =  30;
-	motor[RightMotor] = -10;
+	motor[RightMotor] = -30;
 	sleep(intShortWait);
 	motor[LeftMotor] = 0;
 	motor[RightMotor] = 0;
@@ -148,6 +148,33 @@ void GetDistances()
 	sleep(intShortWait);
 }
 
+bool isLeftTurnPossible()
+{
+	if(intRightDistance <= MinDistance || intLeftDistance > MaxDistance)
+	{
+		return true;
+	}
+	else { return false; }
+}
+
+bool isRightTurnPossible()
+{
+	if(intLeftDistance <= MinDistance || intRightDistance > MaxDistance)
+	{
+		return true;
+	}
+	else { return false; }
+}
+
+bool isMoveForwardPossible()
+{
+	if(intFrontDistance >= MinDistance && intFrontDistance <= MaxDistance && intLeftDistance >= MinDistance && intRightDistance >= MinDistance)
+	{
+		return true;
+	}
+	else { return false; }
+}
+
 task main()
 {
 	ResetSensorLocation();
@@ -156,19 +183,19 @@ task main()
 		ResetAllMotorEncoders();
 		setLEDColor(ledGreenPulse);
 		GetDistances();
-		if(intLeftDistance <= MaxDistance && intLeftDistance >= MinDistance && intFrontDistance >= MaxDistance)
-		{
-			MoveForward();
-		}
-		else if (intFrontDistance < MinDistance)
+		if (intFrontDistance <= MinDistance)
 		{
 			MoveBack();
 		}
-		else if (intLeftDistance <= MinDistance || intFrontDistance <= MaxDistance)
+				else if (isMoveForwardPossible())
+		{
+			MoveForward();
+		}
+		else if (isRightTurnPossible())
 		{
 			MoveRight();
 		}
-		else if (intRightDistance <= MinDistance || intLeftDistance >= MaxDistance)
+		else if (isLeftTurnPossible())
 		{
 			MoveLeft();
 		}
