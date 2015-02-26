@@ -31,14 +31,14 @@ void ResetSensorLocation()
 	sleep(intSensorWait);
 	motor[Arm] = 0;
 	ResetAllMotorEncoders();
-	displayTextLine(10, "Let's face front!");
+	//displayTextLine(10, "Let's face front!");
 	setMotorTarget(Arm, 105, 15);
 	setLEDColor(ledGreen);
 	while(getMotorRunning(Arm))
 	{
 		//do nothing
 		sleep(intSensorWait);
-		setLEDColor(ledOrange);
+		//setLEDColor(ledOrange);
 	}
 	setLEDColor(ledGreenFlash);
 }
@@ -134,16 +134,16 @@ void GetDistances()
 {
 	GetLeftDistance();
 	sleep(intShortWait);
-	displayBigTextLine(2, "%d", intLeftDistance);
+	//displayBigTextLine(2, "%d", intLeftDistance);
 	sleep(intShortWait);
 	GetRightDistance();
 	sleep(intShortWait);
-	displayBigTextLine(4, "%d", intRightDistance);
+	//displayBigTextLine(4, "%d", intRightDistance);
 	sleep(intShortWait);
 
 	GetFrontDistance();
 	sleep(intShortWait);
-	displayBigTextLine(6, "%d", intFrontDistance);
+	//displayBigTextLine(6, "%d", intFrontDistance);
 	sleep(intShortWait);
 	sleep(intShortWait);
 }
