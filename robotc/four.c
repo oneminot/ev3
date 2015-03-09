@@ -34,9 +34,7 @@ void RotateLeft()
 
 void RotateRight()
 {
-	motor[leftTire] = RotateSpeed;
-	motor[RightTire] = -RotateSpeed;
-	sleep(1000);
+	setMotorSyncEncoder(motorC, motorB, 1, 1, RotateSpeed);
 }
 
 void dontstop()
@@ -48,12 +46,9 @@ void dontstop()
 task main()
 {
 	resetGyro(GyroSensor);
-	while(true)
+	while((getGyroDegrees(GyroSensor) % 360) > -90)
 	{
-		RotateLeft();
 		RotateRight();
-		dontstop();
-		sleep(5000);
 		DisplaySensorData();
 	}
 }
