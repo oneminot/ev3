@@ -9,60 +9,59 @@
 int KSoundVolume = 5;
 
 int KForwardSpeed = 20;
-int KForwardRotate = 180;
-int KForwardRatio = 0;
 int KTurnSpeed = 20;
+
 int KDebugTimeout = 5000;
+
 const int KTrayLength = 7;
 const int KTrayWidth = 5;
 
-int KushalTray[KTrayLength][KTrayWidth];
+int VisitedSquare[KTrayLength][KTrayWidth];
+int Wall[KTrayLength][KTrayWidth];
 
-void PrintStats()
-{
-	displayBigTextLine(4, "welcome, kus");
-	short lightSensorValue;
-	lightSensorValue = SensorValue(LightSensor);
-	displayBigTextLine(6, "%d", lightSensorValue);
-	float colorSensorValue;
-	colorSensorValue = getColorReflected(ColorSensor);
-	displayBigTextLine(8, "%d", colorSensorValue);
-	resetMotorEncoder(LeftTire);
-	resetMotorEncoder(RightTire);
-	sleep(KDebugTimeout);
-}
-
-void InitializeTray(int InitialValue)
+void InitializeVisitedSquareTray(int InitialValue)
 {
 	for (int i = 0; i < KTrayLength; i++)
 	{
 		for (int j = 0; j < KTrayWidth; j++)
 		{
-			KushalTray[i][j] = InitialValue;
+			VisitedSquare[i][j] = InitialValue;
 		}
 	}
 }
 
-void GoForward()
+void InitializeWallTray(int InitialValue)
 {
-	sleep(KDebugTimeout);
-	setMotorSyncEncoder(LeftTire, RightTire, KForwardRatio, KForwardRotate, KForwardSpeed);
+	for (int i = 0; i < KTrayLength; i++)
+	{
+		for (int j = 0; j < KTrayWidth; j++)
+		{
+			Wall[i][j] = InitialValue;
+		}
+	}
+}
+
+void PrintStats()
+{
+
 }
 
 bool ShouldGoLeft()
 {
-	if(SensorValue(LightSensor) > 30 && SensorValue(ColorSensor) < 5){return true;} else {return false;}
+	if(SensorValue(LeftColorSensor) > 12 && SensorValue(RightColorSensor) <= 5){return true;} else {return false;}
 }
 
 bool ShouldGoRight()
 {
-	if(SensorValue(LightSensor) < 30 && SensorValue(ColorSensor) > 5){return true;} else {return false;}
+	if(SensorValue(LeftColorSensor) <= 12 && SensorValue(RightColorSensor) > 5){return true;} else {return false;}
 }
 
 task main()
 {
 	setSoundVolume(KSoundVolume);
-	InitializeTray(0);
+	InitializeVisitedSquareTray(0);
+	InitializeWallTray(0);
+
 	while(true)
 	{
 		PrintStats();
