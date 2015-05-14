@@ -60,18 +60,14 @@ void GoBackFull()
 		{
 			kushal_stop();
 			setMotorSpeed(RightTire, -10);
-			while(SensorValue[RightColor] > 2)
-			{
-			}
+			while(SensorValue[RightColor] > 2){}
 			kushal_stop();
 		}
 		else if(SensorValue[LeftColor] > 2 && SensorValue[RightColor] < 2)
 		{
 			kushal_stop();
 			setMotorSpeed(LeftTire, -10);
-			while(SensorValue[LeftColor] > 2)
-			{
-			}
+			while(SensorValue[LeftColor] > 2){}
 			kushal_stop();
 		}
 		else if(SensorValue[LeftColor] < 2 && SensorValue[RightColor] < 2)
@@ -88,9 +84,7 @@ bool checkforred()
 	resetMotorEncoder(LeftTire);
 	resetMotorEncoder(RightTire);
 	setMotorSyncEncoder(LeftTire,RightTire,0,100,30);
-	while(getMotorRunning(LeftTire))
-	{
-	}
+	while(getMotorRunning(LeftTire)){}
 	sleep(int_sleep_timer);
 	if(SensorValue[LeftColor] == 5 && SensorValue[RightColor] == 5)
 	{
@@ -101,10 +95,7 @@ bool checkforred()
 		win = true;
 		return false;
 	}
-	else
-	{
-		return true;
-	}
+	else {return true;}
 }
 
 void DriveIn()
