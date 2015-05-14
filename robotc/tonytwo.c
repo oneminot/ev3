@@ -22,6 +22,12 @@ void kushal_stop()
 	setMotorSpeed(LeftTire, 0);
 }
 
+void kushal_reset_motor_encoders()
+{
+	resetMotorEncoder(LeftTire);
+	resetMotorEncoder(RightTire);
+}
+
 void allSpaces()
 {
 	for(int x = 0; x < kushal_length; x++)
@@ -45,9 +51,7 @@ void allSpaces()
 void GoBack()
 {
 	setMotorSyncEncoder(LeftTire,RightTire,0,250,-30);
-	while(getMotorRunning(LeftTire))
-	{
-	}
+	while(getMotorRunning(LeftTire)){}
 	sleep(int_sleep_timer);
 }
 void GoBackFull()
@@ -79,10 +83,9 @@ void GoBackFull()
 	GoBack();
 }
 
-bool checkforred()
+bool should_i_keep_going()
 {
-	resetMotorEncoder(LeftTire);
-	resetMotorEncoder(RightTire);
+	kushal_reset_motor_encoders();
 	setMotorSyncEncoder(LeftTire,RightTire,0,100,30);
 	while(getMotorRunning(LeftTire)){}
 	sleep(int_sleep_timer);
@@ -123,9 +126,7 @@ void DriveIn()
 			kushal_stop();
 			setMotorSpeed(LeftTire, 20);
 			setMotorSpeed(RightTire, -4);
-			while(SensorValue[LeftColor] > 2)
-			{
-			}
+			while(SensorValue[LeftColor] > 2){}
 			kushal_stop();
 		}
 		else if(SensorValue[LeftColor] < 2 && SensorValue[RightColor] < 2)
@@ -133,12 +134,9 @@ void DriveIn()
 			kushal_stop();
 		}
 	}
-	resetMotorEncoder(LeftTire);
-	resetMotorEncoder(RightTire);
+	kushal_reset_motor_encoders();
 	setMotorSyncEncoder(LeftTire,RightTire,0,450,40);
-	while(getMotorRunning(LeftTire))
-	{
-	}
+	while(getMotorRunning(LeftTire)){}
 }
 
 bool GoToLine(int r, int c)
@@ -212,7 +210,6 @@ bool GoToLine(int r, int c)
 		{
 			return false;
 		}
-
 	}
 	else
 	{
@@ -220,7 +217,6 @@ bool GoToLine(int r, int c)
 		setMotorSyncEncoder(LeftTire,RightTire,0,1000,30);
 		while(getMotorRunning(LeftTire))
 		{
-
 			if(getTouchValue(Touch) == 1)
 			{
 				GoBack();
@@ -231,11 +227,9 @@ bool GoToLine(int r, int c)
 				kushal_stop();
 				setMotorSpeed(RightTire, 20);
 				setMotorSpeed(LeftTire, -4);
-				while(SensorValue[RightColor] > 2)
-				{
-				}
+				while(SensorValue[RightColor] > 2){}
 				kushal_stop();
-				temp = checkforred();
+				temp = should_i_keep_going();
 				if(temp == true)
 				{
 					map[r][c] = true;
@@ -253,12 +247,10 @@ bool GoToLine(int r, int c)
 				setMotorSpeed(LeftTire, 0);
 				setMotorSpeed(LeftTire, 20);
 				setMotorSpeed(RightTire, -4);
-				while(SensorValue[LeftColor] > 2)
-				{
-				}
+				while(SensorValue[LeftColor] > 2){}
 				setMotorSpeed(LeftTire, 0);
 				setMotorSpeed(RightTire, 0);
-				temp = checkforred();
+				temp = should_i_keep_going();
 				if(temp == true)
 				{
 					map[r][c] = true;
@@ -274,7 +266,7 @@ bool GoToLine(int r, int c)
 			{
 				setMotorSpeed(RightTire, 0);
 				setMotorSpeed(LeftTire, 0);
-				temp = checkforred();
+				temp = should_i_keep_going();
 				if(temp == true)
 				{
 					map[r][c] = true;
@@ -297,9 +289,7 @@ void TurnRight()
 	int CurGyro = SensorValue[Gyro] + 84;
 	setMotorSpeed(LeftTire, 25);
 	setMotorSpeed(RightTire, -25);
-	while(SensorValue[Gyro] < CurGyro)
-	{
-	}
+	while(SensorValue[Gyro] < CurGyro){}
 	setMotorSpeed(LeftTire, 0);
 	setMotorSpeed(RightTire, 0);
 	sleep(int_sleep_timer);
@@ -311,9 +301,7 @@ void TurnLeft()
 	int CurGyro = SensorValue[Gyro] - 84;
 	setMotorSpeed(LeftTire, -25);
 	setMotorSpeed(RightTire, 25);
-	while(SensorValue[Gyro] > CurGyro)
-	{
-	}
+	while(SensorValue[Gyro] > CurGyro){}
 	setMotorSpeed(LeftTire, 0);
 	setMotorSpeed(RightTire, 0);
 	sleep(int_sleep_timer);
@@ -325,7 +313,6 @@ void checkLeft(int r, int c,int direct,bool &goLeft)
 	{
 		direct = 4;
 	}
-
 	if(direct == 1)
 	{
 		r = r +1;
@@ -342,12 +329,10 @@ void checkLeft(int r, int c,int direct,bool &goLeft)
 	{
 		c = c - 1;
 	}
-
 	if((direct == 1 && r > 6) || (direct == 2 && c > 4) || (direct == 3 && r < 0) || (direct == 4 && c < 0))
 	{
 		goLeft = false;
 	}
-
 	if(goLeft)
 	{
 		TurnLeft();
@@ -369,7 +354,6 @@ void checkRight(int r, int c,int direct,bool &goRight)
 	{
 		direct = 1;
 	}
-
 	if(direct == 1)
 	{
 		r = r +1;
@@ -386,12 +370,10 @@ void checkRight(int r, int c,int direct,bool &goRight)
 	{
 		c = c - 1;
 	}
-
 	if((direct == 1 && r > 6) || (direct == 2 && c > 4) || (direct == 3 && r < 0) || (direct == 4 && c < 0))
 	{
 		goRight = false;
 	}
-
 	if(goRight)
 	{
 		TurnRight();
@@ -425,13 +407,10 @@ void checkFront(int r, int c,int direct, bool &goStraight)
 	{
 		c = c - 1;
 	}
-
-
 	if((direct == 1 && r > 6) || (direct == 2 && c > 4) || (direct == 3 && r < 0) || (direct == 4 && c < 0))
 	{
 		goStraight = false;
 	}
-
 	if(goStraight)
 	{
 		if(!GoToLine(r,c))
@@ -456,8 +435,6 @@ void Maze(int r, int c, int direct)
 	displayCenteredBigTextLine(1, "Row%d",r);
 	displayCenteredBigTextLine(3, "Col%d",c);
 	displayCenteredBigTextLine(5, "Dir%d",direct);
-
-
 	if(direct > 4)
 	{
 		direct = 1;
@@ -466,25 +443,21 @@ void Maze(int r, int c, int direct)
 	{
 		direct = 4;
 	}
-
 	checkLeft(r,c,direct-1,goLeft);
 	checkFront(r,c,direct,goStraight);
 	checkRight(r,c,direct+1,goRight);
-
 	if(win == true || spaces == true)
 	{
 		goLeft = false;
 		goRight = false;
 		goStraight = false;
 	}
-
 	if(goLeft)
 	{
 		tempr = r;
 		tempc = c;
 		tempdir = direct;
-		direct = direct-1;
-
+		direct = direct - 1;
 		if(direct <1)
 		{
 			direct = 4;
@@ -524,7 +497,6 @@ void Maze(int r, int c, int direct)
 	{
 		tempr = r;
 		tempc = c;
-
 		if(direct == 1)
 		{
 			tempr = r + 1;
@@ -593,7 +565,6 @@ void Maze(int r, int c, int direct)
 			goRight = false;
 			goStraight = false;
 		}
-
 	}
 	if(!goLeft  && !goRight && !goStraight)
 	{
