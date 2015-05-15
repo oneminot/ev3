@@ -218,7 +218,7 @@ bool GoToLine(int r, int c)
 			if(SensorValue[LeftColor] < 2 && SensorValue[RightColor] > 2)
 			{
 				kushal_stop();
-				kushal_turn_left(20, -4);
+				kushal_turn(20, -4);
 				while(SensorValue[RightColor] > 2){}
 				kushal_stop();
 				temp = should_i_keep_going();
