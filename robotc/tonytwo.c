@@ -33,7 +33,7 @@ void kushal_reset_motor_encoders()
 	resetMotorEncoder(LeftTire);
 	resetMotorEncoder(RightTire);
 }
-void allSpaces()
+void set_spaces_true_if_we_are_in_white()
 {
 	displayCenteredTextLine(7, "%s", "all spaces");
 	for(int x = 0; x < kushal_length; x++)
@@ -144,7 +144,7 @@ void DriveIn()
 bool GoToLine(int r, int c)
 {
 	displayCenteredTextLine(7, "%s", "go to line");
-	allSpaces();
+	set_spaces_true_if_we_are_in_white();
 	bool temp = true;
 	if(win == true || spaces == true)
 	{
@@ -419,7 +419,7 @@ void checkFront(int r, int c,int kushal_direction, bool &goStraight)
 void Maze(int r, int c, int kushal_direction)
 {
 	displayCenteredTextLine(7, "%s", "maze");
-	allSpaces();
+	set_spaces_true_if_we_are_in_white();
 	int kushal_temporary_row,kushal_temporary_column,tempdir;
 	bool goLeft = true;
 	bool goRight = true;
@@ -477,7 +477,7 @@ void Maze(int r, int c, int kushal_direction)
 		GoBackFull();
 		TurnRight();
 		kushal_direction = tempdir;
-		allSpaces();
+		set_spaces_true_if_we_are_in_white();
 		if(win == true|| spaces == true)
 		{
 			goLeft = false;
@@ -507,7 +507,7 @@ void Maze(int r, int c, int kushal_direction)
 		DriveIn();
 		Maze(kushal_temporary_row , kushal_temporary_column , kushal_direction);
 		GoBackFull();
-		allSpaces();
+		set_spaces_true_if_we_are_in_white();
 		if(win == true || spaces == true)
 		{
 			goLeft = false;
@@ -546,7 +546,7 @@ void Maze(int r, int c, int kushal_direction)
 		GoBackFull();
 		TurnLeft();
 		kushal_direction = tempdir;
-		allSpaces();
+		set_spaces_true_if_we_are_in_white();
 		if(win == true|| spaces == true)
 		{
 			goLeft = false;
@@ -556,7 +556,7 @@ void Maze(int r, int c, int kushal_direction)
 	}
 	if(!goLeft  && !goRight && !goStraight)
 	{
-		allSpaces();
+		set_spaces_true_if_we_are_in_white();
 	}
 }
 task main()
