@@ -9,6 +9,10 @@
 const int kushal_length = 7;
 const int kushal_width = 5;
 
+const int kushal_initial_length = 0;
+const int kushal_initial_width = 0;
+const int kushal_initial_direction = 0;
+
 bool map[kushal_length][kushal_width];
 bool win;
 bool spaces = false;
@@ -575,6 +579,6 @@ void Maze(int r, int c, int direct)
 task main()
 {
 	resetGyro(Gyro);
-	map[0][0] = true;
-	Maze(0,0,1);
+	map[kushal_initial_length][kushal_initial_width] = true;
+	Maze(kushal_initial_length, kushal_initial_width, kushal_initial_direction);
 }
