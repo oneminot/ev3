@@ -9,7 +9,7 @@ const int kushal_length = 7;
 const int kushal_width = 5;
 const int kushal_initial_length = 0;
 const int kushal_initial_width = 0;
-const int kushal_initial_direction = 0;
+const int kushal_initial_kushal_directionion = 0;
 bool is_kushal_tile_white[kushal_length][kushal_width];
 bool win;
 bool spaces = false;
@@ -186,9 +186,9 @@ bool GoToLine(int r, int c)
 		}
 		else if(c - 1 > -1)
 		{
-			if(is_kushal_tile_white[r][c-1]== false)
+			if(is_kushal_tile_white[r][c - 1]== false)
 			{
-				if(GoToLine(r, c-1))
+				if(GoToLine(r, c - 1))
 				{
 					return true;
 				}
@@ -296,21 +296,21 @@ void TurnLeft()
 	setMotorSpeed(RightTire, 0);
 	sleep(int_sleep_timer);
 }
-void checkLeft(int r, int c,int direct,bool &goLeft)
+void checkLeft(int r, int c,int kushal_direction,bool &goLeft)
 {
-	if(direct <1)
+	if(kushal_direction <1)
 	{
-		direct = 4;
+		kushal_direction = 4;
 	}
-	if(direct == 1)
+	if(kushal_direction == 1)
 	{
 		r = r +1;
 	}
-	else if(direct == 2)
+	else if(kushal_direction == 2)
 	{
 		c = c + 1;
 	}
-	else if(direct == 3)
+	else if(kushal_direction == 3)
 	{
 		r = r - 1;
 	}
@@ -318,7 +318,7 @@ void checkLeft(int r, int c,int direct,bool &goLeft)
 	{
 		c = c - 1;
 	}
-	if((direct == 1 && r > 6) || (direct == 2 && c > 4) || (direct == 3 && r < 0) || (direct == 4 && c < 0))
+	if((kushal_direction == 1 && r > 6) || (kushal_direction == 2 && c > 4) || (kushal_direction == 3 && r < 0) || (kushal_direction == 4 && c < 0))
 	{
 		goLeft = false;
 	}
@@ -336,21 +336,21 @@ void checkLeft(int r, int c,int direct,bool &goLeft)
 		TurnRight();
 	}
 }
-void checkRight(int r, int c,int direct,bool &goRight)
+void checkRight(int r, int c,int kushal_direction,bool &goRight)
 {
-	if(direct > 4)
+	if(kushal_direction > 4)
 	{
-		direct = 1;
+		kushal_direction = 1;
 	}
-	if(direct == 1)
+	if(kushal_direction == 1)
 	{
 		r = r +1;
 	}
-	else if(direct == 2)
+	else if(kushal_direction == 2)
 	{
 		c = c + 1;
 	}
-	else if(direct == 3)
+	else if(kushal_direction == 3)
 	{
 		r = r - 1;
 	}
@@ -358,7 +358,7 @@ void checkRight(int r, int c,int direct,bool &goRight)
 	{
 		c = c - 1;
 	}
-	if((direct == 1 && r > 6) || (direct == 2 && c > 4) || (direct == 3 && r < 0) || (direct == 4 && c < 0))
+	if((kushal_direction == 1 && r > 6) || (kushal_direction == 2 && c > 4) || (kushal_direction == 3 && r < 0) || (kushal_direction == 4 && c < 0))
 	{
 		goRight = false;
 	}
@@ -376,17 +376,17 @@ void checkRight(int r, int c,int direct,bool &goRight)
 		TurnLeft();
 	}
 }
-void checkFront(int r, int c,int direct, bool &goStraight)
+void checkFront(int r, int c,int kushal_direction, bool &goStraight)
 {
-	if(direct == 1)
+	if(kushal_direction == 1)
 	{
 		r = r + 1;
 	}
-	else if(direct == 2)
+	else if(kushal_direction == 2)
 	{
 		c = c + 1;
 	}
-	else if(direct == 3)
+	else if(kushal_direction == 3)
 	{
 		r = r - 1;
 	}
@@ -394,7 +394,7 @@ void checkFront(int r, int c,int direct, bool &goStraight)
 	{
 		c = c - 1;
 	}
-	if((direct == 1 && r > 6) || (direct == 2 && c > 4) || (direct == 3 && r < 0) || (direct == 4 && c < 0))
+	if((kushal_direction == 1 && r > 6) || (kushal_direction == 2 && c > 4) || (kushal_direction == 3 && r < 0) || (kushal_direction == 4 && c < 0))
 	{
 		goStraight = false;
 	}
@@ -410,66 +410,66 @@ void checkFront(int r, int c,int direct, bool &goStraight)
 		}
 	}
 }
-void Maze(int r, int c, int direct)
+void Maze(int r, int c, int kushal_direction)
 {
 	allSpaces();
-	int tempr,tempc,tempdir;
+	int kushal_temporary_row,kushal_temporary_column,tempdir;
 	bool goLeft = true;
 	bool goRight = true;
 	bool goStraight = true;
 	displayCenteredBigTextLine(1, "Row%d",r);
 	displayCenteredBigTextLine(3, "Col%d",c);
-	displayCenteredBigTextLine(5, "Dir%d",direct);
-	if(direct > 4)
+	displayCenteredBigTextLine(5, "Dir%d",kushal_direction);
+	if(kushal_direction > 4)
 	{
-		direct = 1;
+		kushal_direction = 1;
 	}
-	if(direct <1)
+	if(kushal_direction <1)
 	{
-		direct = 4;
+		kushal_direction = 4;
 	}
-	checkLeft(r,c,direct-1,goLeft);
-	checkFront(r,c,direct,goStraight);
-	checkRight(r,c,direct+1,goRight);
+	checkLeft(r,c,kushal_direction-1,goLeft);
+	checkFront(r,c,kushal_direction,goStraight);
+	checkRight(r,c,kushal_direction+1,goRight);
 	if(win == true || spaces == true)
 	{
 		goLeft = false;
 		goRight = false;
 		goStraight = false;
 	}
+	kushal_temporary_row = r;
+	kushal_temporary_column = c;
 	if(goLeft)
 	{
-		tempr = r;
-		tempc = c;
-		tempdir = direct;
-		direct = direct - 1;
-		if(direct <1)
+		tempdir = kushal_direction;
+		kushal_direction = kushal_direction - 1;
+		if(kushal_direction <1)
 		{
-			direct = 4;
+			kushal_direction = 4;
 		}
-		if(direct == 1)
+		if(kushal_direction == 1)
 		{
-			tempr = r + 1;
+			kushal_temporary_row = r + 1;
 		}
-		else if(direct == 2)
+		else if(kushal_direction == 2)
 		{
-			tempc = c + 1;
+			kushal_temporary_column = c + 1;
 		}
-		else if(direct == 3)
+		else if(kushal_direction == 3)
 		{
-			tempr = r - 1;
+			kushal_temporary_row = r - 1;
 		}
 		else
 		{
-			tempc = c - 1;
+			kushal_temporary_column = c - 1;
 		}
 		sleep(int_sleep_timer);
 		TurnLeft();
 		DriveIn();
-		Maze(tempr , tempc , direct);
+		Maze(kushal_temporary_row , kushal_temporary_column , kushal_direction);
 		GoBackFull();
 		TurnRight();
-		direct = tempdir;
+		kushal_direction = tempdir;
 		allSpaces();
 		if(win == true|| spaces == true)
 		{
@@ -480,27 +480,25 @@ void Maze(int r, int c, int direct)
 	}
 	if(goStraight)
 	{
-		tempr = r;
-		tempc = c;
-		if(direct == 1)
+		if(kushal_direction == 1)
 		{
-			tempr = r + 1;
+			kushal_temporary_row = r + 1;
 		}
-		else if(direct == 2)
+		else if(kushal_direction == 2)
 		{
-			tempc = c + 1;
+			kushal_temporary_column = c + 1;
 		}
-		else if(direct == 3)
+		else if(kushal_direction == 3)
 		{
-			tempr = r - 1;
+			kushal_temporary_row = r - 1;
 		}
 		else
 		{
-			tempc = c - 1;
+			kushal_temporary_column = c - 1;
 		}
 		sleep(int_sleep_timer);
 		DriveIn();
-		Maze(tempr , tempc , direct);
+		Maze(kushal_temporary_row , kushal_temporary_column , kushal_direction);
 		GoBackFull();
 		allSpaces();
 		if(win == true || spaces == true)
@@ -512,37 +510,35 @@ void Maze(int r, int c, int direct)
 	}
 	if(goRight)
 	{
-		tempr = r;
-		tempc = c;
-		tempdir = direct;
-		direct = direct+1;
-		if(direct > 4)
+		tempdir = kushal_direction;
+		kushal_direction = kushal_direction + 1;
+		if(kushal_direction > 4)
 		{
-			direct = 1;
+			kushal_direction = 1;
 		}
-		if(direct == 1)
+		if(kushal_direction == 1)
 		{
-			tempr = r + 1;
+			kushal_temporary_row = r + 1;
 		}
-		else if(direct == 2)
+		else if(kushal_direction == 2)
 		{
-			tempc = c + 1;
+			kushal_temporary_column = c + 1;
 		}
-		else if(direct == 3)
+		else if(kushal_direction == 3)
 		{
-			tempr = r - 1;
+			kushal_temporary_row = r - 1;
 		}
 		else
 		{
-			tempc = c - 1;
+			kushal_temporary_column = c - 1;
 		}
 		sleep(int_sleep_timer);
 		TurnRight();
 		DriveIn();
-		Maze(tempr,tempc,direct);
+		Maze(kushal_temporary_row,kushal_temporary_column,kushal_direction);
 		GoBackFull();
 		TurnLeft();
-		direct = tempdir;
+		kushal_direction = tempdir;
 		allSpaces();
 		if(win == true|| spaces == true)
 		{
@@ -560,5 +556,5 @@ task main()
 {
 	resetGyro(Gyro);
 	is_kushal_tile_white[kushal_initial_length][kushal_initial_width] = true;
-	Maze(kushal_initial_length, kushal_initial_width, kushal_initial_direction);
+	Maze(kushal_initial_length, kushal_initial_width, kushal_initial_kushal_directionion);
 }
