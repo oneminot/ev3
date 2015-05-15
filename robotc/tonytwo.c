@@ -17,21 +17,25 @@ void DriveIn();
 int int_sleep_timer = 100;
 void kushal_stop()
 {
+	displayCenteredTextLine(7, "%s", "kushal_stop");
 	setMotorSpeed(RightTire, 0);
 	setMotorSpeed(LeftTire, 0);
 }
 void kushal_turn(int kushal_right_tire_speed, int kushal_left_tire_speed)
 {
+	displayCenteredTextLine(7, "%s", "kushal turn");
 	setMotorSpeed(RightTire, kushal_right_tire_speed);
 	setMotorSpeed(LeftTire, kushal_left_tire_speed);
 }
 void kushal_reset_motor_encoders()
 {
+	displayCenteredTextLine(7, "%s", "kushal reset motor encoders");
 	resetMotorEncoder(LeftTire);
 	resetMotorEncoder(RightTire);
 }
 void allSpaces()
 {
+	displayCenteredTextLine(7, "%s", "all spaces");
 	for(int x = 0; x < kushal_length; x++)
 	{
 		for(int y = 0; y < kushal_width; y++)
@@ -51,12 +55,16 @@ void allSpaces()
 }
 void GoBack()
 {
+
+	displayCenteredTextLine(7, "%s", "go back");
 	setMotorSyncEncoder(LeftTire,RightTire,0,250,-30);
 	while(getMotorRunning(LeftTire)){}
 	sleep(int_sleep_timer);
 }
 void GoBackFull()
 {
+
+	displayCenteredTextLine(7, "%s", "go back full");
 	kushal_stop();
 	setMotorSyncEncoder(LeftTire,RightTire,0,700,-30);
 	while(getMotorRunning(LeftTire))
@@ -85,6 +93,8 @@ void GoBackFull()
 }
 bool should_i_keep_going()
 {
+
+	displayCenteredTextLine(7, "%s", "should i keep going");
 	kushal_reset_motor_encoders();
 	setMotorSyncEncoder(LeftTire,RightTire,0,100,30);
 	while(getMotorRunning(LeftTire)){}
@@ -102,6 +112,7 @@ bool should_i_keep_going()
 }
 void DriveIn()
 {
+	displayCenteredTextLine(7, "%s", "drive in");
 	kushal_stop();
 	setMotorSyncEncoder(LeftTire,RightTire,0,700,40);
 	while(getMotorRunning(LeftTire))
@@ -135,6 +146,7 @@ void DriveIn()
 }
 bool GoToLine(int r, int c)
 {
+	displayCenteredTextLine(7, "%s", "go to line");
 	allSpaces();
 	bool temp = true;
 	if(win == true || spaces == true)
@@ -272,6 +284,7 @@ bool GoToLine(int r, int c)
 }
 void TurnRight()
 {
+	displayCenteredTextLine(7, "%s", "turn right");
 	kushal_stop();
 	int CurGyro = SensorValue[Gyro] + 84;
 	kushal_turn(-25, 25);
@@ -281,6 +294,7 @@ void TurnRight()
 }
 void TurnLeft()
 {
+	displayCenteredTextLine(7, "%s", "turn left");
 	kushal_stop();
 	int CurGyro = SensorValue[Gyro] - 84;
 	kushal_turn(25, -25);
@@ -290,6 +304,7 @@ void TurnLeft()
 }
 void checkLeft(int r, int c,int kushal_direction,bool &goLeft)
 {
+	displayCenteredTextLine(7, "%s", "check left");
 	if(kushal_direction <1)
 	{
 		kushal_direction = 4;
@@ -330,6 +345,7 @@ void checkLeft(int r, int c,int kushal_direction,bool &goLeft)
 }
 void checkRight(int r, int c,int kushal_direction, bool &goRight)
 {
+	displayCenteredTextLine(7, "%s", "check right");
 	if(kushal_direction > 4)
 	{
 		kushal_direction = 1;
@@ -370,6 +386,7 @@ void checkRight(int r, int c,int kushal_direction, bool &goRight)
 }
 void checkFront(int r, int c,int kushal_direction, bool &goStraight)
 {
+	displayCenteredTextLine(7, "%s", "check front");
 	if(kushal_direction == 1)
 	{
 		r = r + 1;
@@ -404,14 +421,16 @@ void checkFront(int r, int c,int kushal_direction, bool &goStraight)
 }
 void Maze(int r, int c, int kushal_direction)
 {
+
+	displayCenteredTextLine(7, "%s", "maze");
 	allSpaces();
 	int kushal_temporary_row,kushal_temporary_column,tempdir;
 	bool goLeft = true;
 	bool goRight = true;
 	bool goStraight = true;
-	displayCenteredBigTextLine(1, "Row%d",r);
-	displayCenteredBigTextLine(3, "Column %d",c);
-	displayCenteredBigTextLine(5, "Direction %d",kushal_direction);
+	displayCenteredBigTextLine(1, "Row%d", r);
+	displayCenteredBigTextLine(3, "Column %d", c);
+	displayCenteredBigTextLine(5, "Direction %d", kushal_direction);
 	if(kushal_direction > 4)
 	{
 		kushal_direction = 1;
@@ -546,6 +565,7 @@ void Maze(int r, int c, int kushal_direction)
 }
 task main()
 {
+	displayCenteredTextLine(7, "%s", "main");
 	resetGyro(Gyro);
 	is_kushal_tile_white[kushal_initial_length][kushal_initial_width] = true;
 	Maze(kushal_initial_length, kushal_initial_width, kushal_initial_kushal_directionion);
