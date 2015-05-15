@@ -13,7 +13,7 @@ const int kushal_initial_length = 0;
 const int kushal_initial_width = 0;
 const int kushal_initial_direction = 0;
 
-bool map[kushal_length][kushal_width];
+bool is_kushal_tile_white[kushal_length][kushal_width];
 bool win;
 bool spaces = false;
 void DriveIn();
@@ -38,7 +38,7 @@ void allSpaces()
 	{
 		for(int y = 0; y < kushal_width; y++)
 		{
-			if(map[x][y] == false)
+			if(is_kushal_tile_white[x][y] == false)
 			{
 				spaces = false;
 				x = kushal_length;
@@ -151,11 +151,11 @@ bool GoToLine(int r, int c)
 	{
 		return false;
 	}
-	if(map[r][c]== true)
+	if(is_kushal_tile_white[r][c]== true)
 	{
 		if(r + 1 < kushal_length)
 		{
-			if(map[r+1][c]== false)
+			if(is_kushal_tile_white[r+1][c]== false)
 			{
 				if(GoToLine(r+1,c))
 				{
@@ -170,7 +170,7 @@ bool GoToLine(int r, int c)
 		}
 		else if(r - 1 > -1)
 		{
-			if(map[r - 1][c]== false)
+			if(is_kushal_tile_white[r - 1][c]== false)
 			{
 				if(GoToLine(r - 1,c))
 				{
@@ -184,7 +184,7 @@ bool GoToLine(int r, int c)
 		}
 		else if(c + 1 < kushal_width)
 		{
-			if(map[r][c + 1]== false)
+			if(is_kushal_tile_white[r][c + 1]== false)
 			{
 				if(GoToLine(r,c + 1))
 				{
@@ -198,7 +198,7 @@ bool GoToLine(int r, int c)
 		}
 		else if(c - 1 > -1)
 		{
-			if(map[r][c-1]== false)
+			if(is_kushal_tile_white[r][c-1]== false)
 			{
 				if(GoToLine(r, c-1))
 				{
@@ -236,7 +236,7 @@ bool GoToLine(int r, int c)
 				temp = should_i_keep_going();
 				if(temp == true)
 				{
-					map[r][c] = true;
+					is_kushal_tile_white[r][c] = true;
 					GoBack();
 					return true;
 				}
@@ -257,7 +257,7 @@ bool GoToLine(int r, int c)
 				temp = should_i_keep_going();
 				if(temp == true)
 				{
-					map[r][c] = true;
+					is_kushal_tile_white[r][c] = true;
 					GoBack();
 					return true;
 				}
@@ -273,7 +273,7 @@ bool GoToLine(int r, int c)
 				temp = should_i_keep_going();
 				if(temp == true)
 				{
-					map[r][c] = true;
+					is_kushal_tile_white[r][c] = true;
 					GoBack();
 					return true;
 				}
@@ -579,6 +579,6 @@ void Maze(int r, int c, int direct)
 task main()
 {
 	resetGyro(Gyro);
-	map[kushal_initial_length][kushal_initial_width] = true;
+	is_kushal_tile_white[kushal_initial_length][kushal_initial_width] = true;
 	Maze(kushal_initial_length, kushal_initial_width, kushal_initial_direction);
 }
