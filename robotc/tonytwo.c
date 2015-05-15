@@ -55,7 +55,6 @@ void allSpaces()
 }
 void GoBack()
 {
-
 	displayCenteredTextLine(7, "%s", "go back");
 	setMotorSyncEncoder(LeftTire,RightTire,0,250,-30);
 	while(getMotorRunning(LeftTire)){}
@@ -63,7 +62,6 @@ void GoBack()
 }
 void GoBackFull()
 {
-
 	displayCenteredTextLine(7, "%s", "go back full");
 	kushal_stop();
 	setMotorSyncEncoder(LeftTire,RightTire,0,700,-30);
@@ -93,7 +91,6 @@ void GoBackFull()
 }
 bool should_i_keep_going()
 {
-
 	displayCenteredTextLine(7, "%s", "should i keep going");
 	kushal_reset_motor_encoders();
 	setMotorSyncEncoder(LeftTire,RightTire,0,100,30);
@@ -421,7 +418,6 @@ void checkFront(int r, int c,int kushal_direction, bool &goStraight)
 }
 void Maze(int r, int c, int kushal_direction)
 {
-
 	displayCenteredTextLine(7, "%s", "maze");
 	allSpaces();
 	int kushal_temporary_row,kushal_temporary_column,tempdir;
