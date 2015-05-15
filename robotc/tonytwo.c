@@ -56,7 +56,7 @@ void set_spaces_true_if_we_are_in_white()
 void GoBack()
 {
 	displayCenteredTextLine(7, "%s", "go back");
-	setMotorSyncEncoder(LeftTire,RightTire,0,250,-30);
+	setMotorSyncEncoder(LeftTire, RightTire, 0, 250, -30);
 	while(getMotorRunning(LeftTire)){}
 	sleep(int_sleep_timer);
 }
@@ -64,7 +64,7 @@ void GoBackFull()
 {
 	displayCenteredTextLine(7, "%s", "go back full");
 	kushal_stop();
-	setMotorSyncEncoder(LeftTire,RightTire,0,700,-30);
+	setMotorSyncEncoder(LeftTire, RightTire, 0, 700, -30);
 	while(getMotorRunning(LeftTire))
 	{
 		if(SensorValue[LeftColor] < 2 && SensorValue[RightColor] > 2)
@@ -93,7 +93,7 @@ bool should_i_keep_going()
 {
 	displayCenteredTextLine(7, "%s", "should i keep going");
 	kushal_reset_motor_encoders();
-	setMotorSyncEncoder(LeftTire,RightTire,0,100,30);
+	setMotorSyncEncoder(LeftTire, RightTire, 0, 100, 30);
 	while(getMotorRunning(LeftTire)){}
 	sleep(int_sleep_timer);
 	if(SensorValue[LeftColor] == 5 && SensorValue[RightColor] == 5)
@@ -111,7 +111,7 @@ void DriveIn()
 {
 	displayCenteredTextLine(7, "%s", "drive in");
 	kushal_stop();
-	setMotorSyncEncoder(LeftTire,RightTire,0,700,40);
+	setMotorSyncEncoder(LeftTire, RightTire, 0, 700, 40);
 	while(getMotorRunning(LeftTire))
 	{
 		if(getTouchValue(Touch) == 1)
@@ -138,7 +138,7 @@ void DriveIn()
 		}
 	}
 	kushal_reset_motor_encoders();
-	setMotorSyncEncoder(LeftTire,RightTire,0,450,40);
+	setMotorSyncEncoder(LeftTire, RightTire, 0, 450, 40);
 	while(getMotorRunning(LeftTire)){}
 }
 bool GoToLine(int r, int c)
