@@ -20,6 +20,11 @@ void kushal_stop()
 	setMotorSpeed(RightTire, 0);
 	setMotorSpeed(LeftTire, 0);
 }
+void kushal_turn_left(int kushal_left_tire_speed, int kushal_right_tire_speed)
+{
+	setMotorSpeed(RightTire, kushal_left_tire_speed);
+	setMotorSpeed(LeftTire, kushal_right_tire_speed);
+}
 void kushal_reset_motor_encoders()
 {
 	resetMotorEncoder(LeftTire);
@@ -217,8 +222,7 @@ bool GoToLine(int r, int c)
 			if(SensorValue[LeftColor] < 2 && SensorValue[RightColor] > 2)
 			{
 				kushal_stop();
-				setMotorSpeed(RightTire, 20);
-				setMotorSpeed(LeftTire, -4);
+				kushal_turn_left(20, -4);
 				while(SensorValue[RightColor] > 2){}
 				kushal_stop();
 				temp = should_i_keep_going();
