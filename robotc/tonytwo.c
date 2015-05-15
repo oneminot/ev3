@@ -20,10 +20,10 @@ void kushal_stop()
 	setMotorSpeed(RightTire, 0);
 	setMotorSpeed(LeftTire, 0);
 }
-void kushal_turn_left(int kushal_left_tire_speed, int kushal_right_tire_speed)
+void kushal_turn(int kushal_right_tire_speed, int kushal_left_tire_speed)
 {
-	setMotorSpeed(RightTire, kushal_left_tire_speed);
-	setMotorSpeed(LeftTire, kushal_right_tire_speed);
+	setMotorSpeed(RightTire, kushal_right_tire_speed);
+	setMotorSpeed(LeftTire, kushal_left_tire_speed);
 }
 void kushal_reset_motor_encoders()
 {
@@ -113,18 +113,14 @@ void DriveIn()
 		if(SensorValue[LeftColor] < 2 && SensorValue[RightColor] > 2)
 		{
 			kushal_stop();
-			setMotorSpeed(RightTire, 20);
-			setMotorSpeed(LeftTire, -4);
-			while(SensorValue[RightColor] > 2)
-			{
-			}
+			kushal_turn(20, -4);
+			while(SensorValue[RightColor] > 2){}
 			kushal_stop();
 		}
 		else if(SensorValue[LeftColor] > 2 && SensorValue[RightColor] < 2)
 		{
 			kushal_stop();
-			setMotorSpeed(LeftTire, 20);
-			setMotorSpeed(RightTire, -4);
+			kushal_turn(-4, 20);
 			while(SensorValue[LeftColor] > 2){}
 			kushal_stop();
 		}
@@ -149,9 +145,9 @@ bool GoToLine(int r, int c)
 	{
 		if(r + 1 < kushal_length)
 		{
-			if(is_kushal_tile_white[r+1][c]== false)
+			if(is_kushal_tile_white[r + 1][c]== false)
 			{
-				if(GoToLine(r+1,c))
+				if(GoToLine(r + 1,c))
 				{
 					return true;
 				}
@@ -239,13 +235,10 @@ bool GoToLine(int r, int c)
 			}
 			else if(SensorValue[LeftColor] > 2 && SensorValue[RightColor] < 2)
 			{
-				setMotorSpeed(RightTire, 0);
-				setMotorSpeed(LeftTire, 0);
-				setMotorSpeed(LeftTire, 20);
-				setMotorSpeed(RightTire, -4);
+				kushal_stop();
+				kushal_turn(-4, 20);
 				while(SensorValue[LeftColor] > 2){}
-				setMotorSpeed(LeftTire, 0);
-				setMotorSpeed(RightTire, 0);
+				kushal_stop();
 				temp = should_i_keep_going();
 				if(temp == true)
 				{
@@ -260,8 +253,7 @@ bool GoToLine(int r, int c)
 			}
 			else if(SensorValue[LeftColor] < 2 && SensorValue[RightColor] < 2)
 			{
-				setMotorSpeed(RightTire, 0);
-				setMotorSpeed(LeftTire, 0);
+				kushal_stop();
 				temp = should_i_keep_going();
 				if(temp == true)
 				{
@@ -282,22 +274,18 @@ void TurnRight()
 {
 	kushal_stop();
 	int CurGyro = SensorValue[Gyro] + 84;
-	setMotorSpeed(LeftTire, 25);
-	setMotorSpeed(RightTire, -25);
+	kushal_turn(-25, 25);
 	while(SensorValue[Gyro] < CurGyro){}
-	setMotorSpeed(LeftTire, 0);
-	setMotorSpeed(RightTire, 0);
+	kushal_stop();
 	sleep(int_sleep_timer);
 }
 void TurnLeft()
 {
 	kushal_stop();
 	int CurGyro = SensorValue[Gyro] - 84;
-	setMotorSpeed(LeftTire, -25);
-	setMotorSpeed(RightTire, 25);
+	kushal_turn(25, -25);
 	while(SensorValue[Gyro] > CurGyro){}
-	setMotorSpeed(LeftTire, 0);
-	setMotorSpeed(RightTire, 0);
+	kushal_stop();
 	sleep(int_sleep_timer);
 }
 void checkLeft(int r, int c,int kushal_direction,bool &goLeft)
@@ -308,7 +296,7 @@ void checkLeft(int r, int c,int kushal_direction,bool &goLeft)
 	}
 	if(kushal_direction == 1)
 	{
-		r = r +1;
+		r = r + 1;
 	}
 	else if(kushal_direction == 2)
 	{
@@ -329,7 +317,7 @@ void checkLeft(int r, int c,int kushal_direction,bool &goLeft)
 	if(goLeft)
 	{
 		TurnLeft();
-		if(!(GoToLine(r,c)))
+		if(!(GoToLine(r, c)))
 		{
 			goLeft = false;
 		}
@@ -340,7 +328,7 @@ void checkLeft(int r, int c,int kushal_direction,bool &goLeft)
 		TurnRight();
 	}
 }
-void checkRight(int r, int c,int kushal_direction,bool &goRight)
+void checkRight(int r, int c,int kushal_direction, bool &goRight)
 {
 	if(kushal_direction > 4)
 	{
@@ -348,7 +336,7 @@ void checkRight(int r, int c,int kushal_direction,bool &goRight)
 	}
 	if(kushal_direction == 1)
 	{
-		r = r +1;
+		r = r + 1;
 	}
 	else if(kushal_direction == 2)
 	{
@@ -369,7 +357,7 @@ void checkRight(int r, int c,int kushal_direction,bool &goRight)
 	if(goRight)
 	{
 		TurnRight();
-		if(!GoToLine(r,c))
+		if(!GoToLine(r, c))
 		{
 			goRight = false;
 		}
@@ -404,7 +392,7 @@ void checkFront(int r, int c,int kushal_direction, bool &goStraight)
 	}
 	if(goStraight)
 	{
-		if(!GoToLine(r,c))
+		if(!GoToLine(r, c))
 		{
 			goStraight = false;
 		}
@@ -422,8 +410,8 @@ void Maze(int r, int c, int kushal_direction)
 	bool goRight = true;
 	bool goStraight = true;
 	displayCenteredBigTextLine(1, "Row%d",r);
-	displayCenteredBigTextLine(3, "Col%d",c);
-	displayCenteredBigTextLine(5, "Dir%d",kushal_direction);
+	displayCenteredBigTextLine(3, "Column %d",c);
+	displayCenteredBigTextLine(5, "Direction %d",kushal_direction);
 	if(kushal_direction > 4)
 	{
 		kushal_direction = 1;
