@@ -10,6 +10,7 @@ int current_x, current_y, final_x, final_y;
 
 const int kushal_length = 7;
 const int kushal_width = 5;
+const int updownleftright = 4;
 const int kushal_production_sleep_time = 100;
 
 bool have_we_visited_square[kushal_length][kushal_width];
@@ -29,6 +30,8 @@ task main()
 {
 	sleep(kushal_production_sleep_time);
 	current_x = current_y = final_x = final_y = 0;
+
+	bool kushal_moves[updownleftright];
 
 	for (int i = 0; i < kushal_length; i++)
 	{
@@ -64,10 +67,14 @@ task main()
 		}
 	}
 
-		for (int i = 0; i < kushal_length; i++)
+	for (int i = 0; i < kushal_length; i++)
 	{
 		for (int j = 0; j < kushal_width; j++)
 		{
+			for (int apple = 0; apple < updownleftright; apple++)
+			{
+				kushal_moves[apple] = true;
+			}
 		}
 	}
 }
