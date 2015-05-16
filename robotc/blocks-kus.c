@@ -8,11 +8,13 @@
 const int kushal_length = 7;
 const int kushal_width = 5;
 const int kushal_production_sleep_time = 100;
+bool have_we_visited_square[kushal_length][kushal_width];
 struct kushal_road{
 	int start_x, start_y, end_x, end_y, distance;
 }
 struct kushal_square{
 	kushal_road kushal_up, kushal_down, kushal_left, kushal_right;
+	int location_x, location_y;
 }
 task main()
 {
