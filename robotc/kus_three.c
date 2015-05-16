@@ -103,54 +103,7 @@ bool checkforred()
 		return true;
 	}
 }
-void DriveIn()
-{
-	setMotorSpeed(RightTire, 0);
-	setMotorSpeed(LeftTire, 0);
-	setMotorSyncEncoder(LeftTire,RightTire,0,700,40);
-	while(getMotorRunning(LeftTire))
-	{
-		if(getTouchValue(Touch) == 1)
-		{
-			GoBack();
-		}
-		if(SensorValue[LeftColor] < 2 && SensorValue[RightColor] > 2)
-		{
-			setMotorSpeed(RightTire, 0);
-			setMotorSpeed(LeftTire, 0);
-			setMotorSpeed(RightTire, 20);
-			setMotorSpeed(LeftTire, -4);
-			while(SensorValue[RightColor] > 2)
-			{
-			}
-			setMotorSpeed(LeftTire, 0);
-			setMotorSpeed(RightTire, 0);
-		}
-		else if(SensorValue[LeftColor] > 2 && SensorValue[RightColor] < 2)
-		{
-			setMotorSpeed(RightTire, 0);
-			setMotorSpeed(LeftTire, 0);
-			setMotorSpeed(LeftTire, 20);
-			setMotorSpeed(RightTire, -4);
-			while(SensorValue[LeftColor] > 2)
-			{
-			}
-			setMotorSpeed(LeftTire, 0);
-			setMotorSpeed(RightTire, 0);
-		}
-		else if(SensorValue[LeftColor] < 2 && SensorValue[RightColor] < 2)
-		{
-			setMotorSpeed(RightTire, 0);
-			setMotorSpeed(LeftTire, 0);
-		}
-	}
-	resetMotorEncoder(LeftTire);
-	resetMotorEncoder(RightTire);
-	setMotorSyncEncoder(LeftTire,RightTire,0,450,40);
-	while(getMotorRunning(LeftTire))
-	{
-	}
-}
+
 bool GoToLine(int r, int c)
 {
 	allSpaces();

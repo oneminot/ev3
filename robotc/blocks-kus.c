@@ -171,10 +171,118 @@ void remove_up_road(){}
 void remove_left_road(){}
 void remove_right_road(){}
 
+void check_for_red(){}
+
+void GoBack()
+{
+	setMotorSpeed(LeftTire, 0);
+	setMotorSpeed(RightTire, 0);
+	setMotorSyncEncoder(LeftTire,RightTire,0,250,-30);
+	while(getMotorRunning(LeftTire))
+	{
+	}
+	sleep(kushal_production_sleep_time);
+}
+
 void go_to_random_destination(){};
 
 //return a false if we hit a wall
-bool kushal_drive_in(){}
+bool kushal_drive_in()
+{
+	setMotorSpeed(RightTire, 0);
+	setMotorSpeed(LeftTire, 0);
+	setMotorSyncEncoder(LeftTire,RightTire,0,700,40);
+	while(getMotorRunning(LeftTire))
+	{
+		if(getTouchValue(Touch) == 1)
+		{
+			GoBack();
+		}
+		if(SensorValue[LeftColor] < 2 && SensorValue[RightColor] > 2)
+		{
+			setMotorSpeed(RightTire, 0);
+			setMotorSpeed(LeftTire, 0);
+			setMotorSpeed(RightTire, 20);
+			setMotorSpeed(LeftTire, -4);
+			while(SensorValue[RightColor] > 2)
+			{
+			}
+			setMotorSpeed(LeftTire, 0);
+			setMotorSpeed(RightTire, 0);
+		}
+		else if(SensorValue[LeftColor] > 2 && SensorValue[RightColor] < 2)
+		{
+			setMotorSpeed(RightTire, 0);
+			setMotorSpeed(LeftTire, 0);
+			setMotorSpeed(LeftTire, 20);
+			setMotorSpeed(RightTire, -4);
+			while(SensorValue[LeftColor] > 2)
+			{
+			}
+			setMotorSpeed(LeftTire, 0);
+			setMotorSpeed(RightTire, 0);
+		}
+		else if(SensorValue[LeftColor] < 2 && SensorValue[RightColor] < 2)
+		{
+			setMotorSpeed(RightTire, 0);
+			setMotorSpeed(LeftTire, 0);
+		}
+	}
+	resetMotorEncoder(LeftTire);
+	resetMotorEncoder(RightTire);
+	setMotorSyncEncoder(LeftTire,RightTire,0,450,40);
+	while(getMotorRunning(LeftTire))
+	{
+	}
+	{
+		setMotorSpeed(RightTire, 0);
+		setMotorSpeed(LeftTire, 0);
+		setMotorSyncEncoder(LeftTire,RightTire,0,700,40);
+		while(getMotorRunning(LeftTire))
+		{
+			if(getTouchValue(Touch) == 1)
+			{
+				GoBack();
+			}
+			if(SensorValue[LeftColor] < 2 && SensorValue[RightColor] > 2)
+			{
+				setMotorSpeed(RightTire, 0);
+				setMotorSpeed(LeftTire, 0);
+				setMotorSpeed(RightTire, 20);
+				setMotorSpeed(LeftTire, -4);
+				while(SensorValue[RightColor] > 2)
+				{
+				}
+				setMotorSpeed(LeftTire, 0);
+				setMotorSpeed(RightTire, 0);
+			}
+			else if(SensorValue[LeftColor] > 2 && SensorValue[RightColor] < 2)
+			{
+				setMotorSpeed(RightTire, 0);
+				setMotorSpeed(LeftTire, 0);
+				setMotorSpeed(LeftTire, 20);
+				setMotorSpeed(RightTire, -4);
+				while(SensorValue[LeftColor] > 2)
+				{
+				}
+				setMotorSpeed(LeftTire, 0);
+				setMotorSpeed(RightTire, 0);
+			}
+			else if(SensorValue[LeftColor] < 2 && SensorValue[RightColor] < 2)
+			{
+				setMotorSpeed(RightTire, 0);
+				setMotorSpeed(LeftTire, 0);
+			}
+		}
+		resetMotorEncoder(LeftTire);
+		resetMotorEncoder(RightTire);
+		setMotorSyncEncoder(LeftTire,RightTire,0,450,40);
+		while(getMotorRunning(LeftTire))
+		{
+		}
+	}
+	return false;
+}
 
 void kushal_follow_directions()
 {
@@ -184,106 +292,170 @@ void kushal_follow_directions()
 	{
 		if (kushal_direction_array[direction_counter] == 'D')
 		{
+			displayBigTextLine(3, "%d, %d, %d, %d", current_x, current_y, final_x, final_y);
 			sleep(kushal_production_sleep_time);
 			if(!kushal_drive_in())
 			{
 				sleep(kushal_production_sleep_time);
 				remove_down_road();
+				set_kushal_direction_array_to_input();
+				Dijkstras(current_x, current_y, final_x, final_y);
+				kushal_follow_directions();
+			}
+			else
+			{
+				current_y++;
+				have_we_visited_square[current_x][current_y] = true;
+				check_for_red();
 			}
 		}
-	}
-	if (current_x == 0 && current_y == 0){}
-	else { go_to_random_destination(); }
-}
-
-task main()
-{
-	sleep(kushal_production_sleep_time);
-	current_x = current_y = final_x = final_y = 0;
-
-	bool kushal_moves[updownleftright];
-
-	for (int i = 0; i < kushal_length; i++)
-	{
-		for (int j = 0; j < kushal_width; j++)
+		else if (kushal_direction_array[direction_counter] == 'U')
 		{
-			current_x = i;
-			current_y = j;
-			have_we_visited_square[i][j] = false;
-
-			kushal_board[i][j].kushal_up.start_x = i;
-			kushal_board[i][j].kushal_up.start_y = j;
-			kushal_board[i][j].kushal_up.end_x = i;
-			kushal_board[i][j].kushal_up.end_y = j;
-			kushal_board[i][j].kushal_up.distance = 1;
-
-			kushal_board[i][j].kushal_down.start_x = i;
-			kushal_board[i][j].kushal_down.start_y = j;
-			kushal_board[i][j].kushal_down.end_x = i;
-			kushal_board[i][j].kushal_down.end_y = j;
-			kushal_board[i][j].kushal_down.distance = 1;
-
-			kushal_board[i][j].kushal_left.start_x = i;
-			kushal_board[i][j].kushal_left.start_y = j;
-			kushal_board[i][j].kushal_left.end_x = i;
-			kushal_board[i][j].kushal_left.end_y = j;
-			kushal_board[i][j].kushal_left.distance = 1;
-
-			kushal_board[i][j].kushal_right.start_x = i;
-			kushal_board[i][j].kushal_right.start_y = j;
-			kushal_board[i][j].kushal_right.end_x = i;
-			kushal_board[i][j].kushal_right.end_y = j;
-			kushal_board[i][j].kushal_right.distance = 1;
+			sleep(kushal_production_sleep_time);
+			if(!kushal_drive_in())
+			{
+				sleep(kushal_production_sleep_time);
+				remove_up_road();
+				set_kushal_direction_array_to_input();
+				Dijkstras(current_x, current_y, final_x, final_y);
+				kushal_follow_directions();
+			}
+			else
+			{
+				current_y--;
+				have_we_visited_square[current_x][current_y] = true;
+				check_for_red();
+			}
 		}
-	}
-
-	for (int i = 0; i < kushal_length; i++)
-	{
-		for (int j = 0; j < kushal_width; j++)
+		else if (kushal_direction_array[direction_counter] == 'L')
 		{
-			for (int apple = 0; apple < updownleftright; apple++)
+			sleep(kushal_production_sleep_time);
+			if(!kushal_drive_in())
 			{
-				kushal_moves[apple] = true;
+				sleep(kushal_production_sleep_time);
+				remove_left_road();
+				set_kushal_direction_array_to_input();
+				Dijkstras(current_x, current_y, final_x, final_y);
+				kushal_follow_directions();
+				direction_counter = 0;
 			}
-			if (j == 0)
+			else
 			{
-				kushal_moves[0] = false;
-			}
-			else if (j == 4)
-			{
-				kushal_moves[1] = false;
-			}
-			if (i == 0)
-			{
-				kushal_moves[2] = false;
-			}
-			else if (i == 6)
-			{
-				kushal_moves[3] = false;
-			}
-			if (kushal_moves[0] == true)
-			{
-				// can go up
-				kushal_board[i][j].kushal_up.end_y = j - 1;
-			}
-			if (kushal_moves[1] == true)
-			{
-				// can go down
-				kushal_board[i][j].kushal_down.end_y = j + 1;
-			}
-			if (kushal_moves[2] == true)
-			{
-				// can go left
-				kushal_board[i][j].kushal_left.end_x = i - 1;
-			}
-			if (kushal_moves[3] == true)
-			{
-				// can go up
-				kushal_board[i][j].kushal_right.end_x = i + 1;
+				current_x--;
+				have_we_visited_square[current_x][current_y] = true;
+				check_for_red();
 			}
 		}
+		if (kushal_direction_array[direction_counter] == 'R')
+		{
+			sleep(kushal_production_sleep_time);
+			if(!kushal_drive_in())
+			{
+				sleep(kushal_production_sleep_time);
+				remove_down_road();
+				set_kushal_direction_array_to_input();
+				Dijkstras(current_x, current_y, final_x, final_y);
+				kushal_follow_directions();
+			}
+			else
+			{
+				current_x++;
+				have_we_visited_square[current_x][current_y] = true;
+				check_for_red();
+			}
+		}
+		if (current_x == 0 && current_y == 0){}
+		else { go_to_random_destination(); }
 	}
-	// we have our boards built completely
-	Dijkstras(0, 0, 4, 2);
-	sleep(kushal_production_sleep_time);
 }
+	task main()
+	{
+		sleep(kushal_production_sleep_time);
+		current_x = current_y = final_x = final_y = 0;
+
+		bool kushal_moves[updownleftright];
+
+		for (int i = 0; i < kushal_length; i++)
+		{
+			for (int j = 0; j < kushal_width; j++)
+			{
+				current_x = i;
+				current_y = j;
+				have_we_visited_square[i][j] = false;
+
+				kushal_board[i][j].kushal_up.start_x = i;
+				kushal_board[i][j].kushal_up.start_y = j;
+				kushal_board[i][j].kushal_up.end_x = i;
+				kushal_board[i][j].kushal_up.end_y = j;
+				kushal_board[i][j].kushal_up.distance = 1;
+
+				kushal_board[i][j].kushal_down.start_x = i;
+				kushal_board[i][j].kushal_down.start_y = j;
+				kushal_board[i][j].kushal_down.end_x = i;
+				kushal_board[i][j].kushal_down.end_y = j;
+				kushal_board[i][j].kushal_down.distance = 1;
+
+				kushal_board[i][j].kushal_left.start_x = i;
+				kushal_board[i][j].kushal_left.start_y = j;
+				kushal_board[i][j].kushal_left.end_x = i;
+				kushal_board[i][j].kushal_left.end_y = j;
+				kushal_board[i][j].kushal_left.distance = 1;
+
+				kushal_board[i][j].kushal_right.start_x = i;
+				kushal_board[i][j].kushal_right.start_y = j;
+				kushal_board[i][j].kushal_right.end_x = i;
+				kushal_board[i][j].kushal_right.end_y = j;
+				kushal_board[i][j].kushal_right.distance = 1;
+			}
+		}
+
+		for (int i = 0; i < kushal_length; i++)
+		{
+			for (int j = 0; j < kushal_width; j++)
+			{
+				for (int apple = 0; apple < updownleftright; apple++)
+				{
+					kushal_moves[apple] = true;
+				}
+				if (j == 0)
+				{
+					kushal_moves[0] = false;
+				}
+				else if (j == 4)
+				{
+					kushal_moves[1] = false;
+				}
+				if (i == 0)
+				{
+					kushal_moves[2] = false;
+				}
+				else if (i == 6)
+				{
+					kushal_moves[3] = false;
+				}
+				if (kushal_moves[0] == true)
+				{
+					// can go up
+					kushal_board[i][j].kushal_up.end_y = j - 1;
+				}
+				if (kushal_moves[1] == true)
+				{
+					// can go down
+					kushal_board[i][j].kushal_down.end_y = j + 1;
+				}
+				if (kushal_moves[2] == true)
+				{
+					// can go left
+					kushal_board[i][j].kushal_left.end_x = i - 1;
+				}
+				if (kushal_moves[3] == true)
+				{
+					// can go up
+					kushal_board[i][j].kushal_right.end_x = i + 1;
+				}
+			}
+		}
+		// we have our boards built completely
+		Dijkstras(0, 0, 4, 2);
+		sleep(kushal_production_sleep_time);
+	}
