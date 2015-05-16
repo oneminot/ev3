@@ -11,14 +11,16 @@ int current_x, current_y, final_x, final_y;
 const int kushal_length = 7;
 const int kushal_width = 5;
 const int updownleftright = 4;
+const int direction_counter_max = 50;
 const int kushal_production_sleep_time = 100;
 
 bool have_we_visited_square[kushal_length][kushal_width];
 int direction_counter;
-char kushal_direction_array[50];
+char kushal_direction_array[direction_counter_max];
+
 void set_kushal_direction_array_to_input()
 {
-	for (int i = 0; i < 50; i++)
+	for (int i = 0; i < direction_counter_max; i++)
 	{
 		kushal_direction_array[i] = 'x';
 	}
@@ -156,6 +158,19 @@ void Dijkstras(int s_x, int s_y, int e_x, int e_y)
 				new_include_y = temp2;
 			}
 		}
+	}
+}
+
+void kushal_follow_directions()
+{
+	direction_counter = direction_counter_max - 1;
+	while (direction_counter > -1)
+	{
+
+	}
+	if ()
+	{
+
 	}
 }
 
