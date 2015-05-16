@@ -161,17 +161,39 @@ void Dijkstras(int s_x, int s_y, int e_x, int e_y)
 	}
 }
 
+void face_up(){}
+void face_down(){}
+void face_left(){}
+void face_right(){}
+
+void remove_down_road(){}
+void remove_up_road(){}
+void remove_left_road(){}
+void remove_right_road(){}
+
+void go_to_random_destination(){};
+
+//return a false if we hit a wall
+bool kushal_drive_in(){}
+
 void kushal_follow_directions()
 {
+	// i helped you a lot and you should give me extra credit -- mitchel
 	direction_counter = direction_counter_max - 1;
 	while (direction_counter > -1)
 	{
-
+		if (kushal_direction_array[direction_counter] == 'D')
+		{
+			sleep(kushal_production_sleep_time);
+			if(!kushal_drive_in())
+			{
+				sleep(kushal_production_sleep_time);
+				remove_down_road();
+			}
+		}
 	}
-	if ()
-	{
-
-	}
+	if (current_x == 0 && current_y == 0){}
+	else { go_to_random_destination(); }
 }
 
 task main()
