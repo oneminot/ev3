@@ -8,23 +8,10 @@
 const int kushal_length = 7;
 const int kushal_width = 5;
 const int kushal_production_sleep_time = 100;
-struct kushal_block{
-	bool kushal_block_is_red;
-}
-struct kushal_structure{
-	kushal_block kushal_structure_array[kushal_length][kushal_width];
+struct kushal_road{
+	int start_x, start_y, end_x, end_y, distance;
 }
 task main()
 {
-	sleep(kushal_production_sleep_time);
-	resetGyro(Gyro);
-	sleep(kushal_production_sleep_time);
-	kushal_structure ks;
-	for (int i = 0; i < kushal_length; i++)
-	{
-		for (int j = 0; j < kushal_width; j++)
-		{
-			ks.kushal_structure_array[i][j].kushal_block_is_red = false;
-		}
-	}
+
 }
