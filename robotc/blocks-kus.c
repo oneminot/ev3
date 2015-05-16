@@ -75,6 +75,43 @@ task main()
 			{
 				kushal_moves[apple] = true;
 			}
+			if (j == 0)
+			{
+				kushal_moves[0] = false;
+			}
+			else if (j == 4)
+			{
+				kushal_moves[1] = false;
+			}
+			if (i == 0)
+			{
+				kushal_moves[2] = false;
+			}
+			else if (i == 6)
+			{
+				kushal_moves[3] = false;
+			}
+			if (kushal_moves[0] == true)
+			{
+				// can go up
+				kushal_board[i][j].kushal_up.end_y = j + 1;
+			}
+			if (kushal_moves[1] == true)
+			{
+				// can go down
+				kushal_board[i][j].kushal_down.end_y = j - 1;
+			}
+			if (kushal_moves[2] == true)
+			{
+				// can go left
+				kushal_board[i][j].kushal_left.end_x = i - 1;
+			}
+			if (kushal_moves[3] == true)
+			{
+				// can go up
+				kushal_board[i][j].kushal_right.end_x = i + 1;
+			}
 		}
 	}
+	// we have our boards built completely
 }
