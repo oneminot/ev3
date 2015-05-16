@@ -11,6 +11,9 @@ const int kushal_production_sleep_time = 100;
 struct kushal_road{
 	int start_x, start_y, end_x, end_y, distance;
 }
+struct kushal_square{
+	kushal_road kushal_up, kushal_down, kushal_left, kushal_right;
+}
 task main()
 {
 
