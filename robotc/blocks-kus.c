@@ -15,6 +15,11 @@ const int kushal_production_sleep_time = 100;
 
 bool have_we_visited_square[kushal_length][kushal_width];
 
+struct basic_square
+{
+	int x, y;
+};
+
 struct kushal_road{
 	int start_x, start_y, end_x, end_y, distance;
 };
@@ -25,6 +30,39 @@ struct kushal_square{
 };
 
 kushal_square kushal_board[kushal_length][kushal_width];
+
+void Dijkstras(int s_x, int s_y, int e_x, int e_y)
+{
+	bool done = false;
+	int lowest, new_include_x, new_include_y, old_include_x, old_include_y;
+	int direction_counter;
+	int kushal_distance_array[kushal_length][kushal_width];
+	basic_square kushal_from_array[kushal_length][kushal_width];
+	bool kushal_include[kushal_length][kushal_width];
+	for (int i = 0; i < kushal_length; i++)
+	{
+		for (int j = 0; j < kushal_width; j++)
+		{
+			kushal_from_array[i][j].x = -1;
+			kushal_from_array[i][j].y = -1;
+			kushal_include[i][j] = false;
+			kushal_distance_array[i][j] = 999;
+		}
+	}
+	kushal_include[s_x][s_y] = true;
+	kushal_distance_array[s_x][s_y] = 0;
+	old_include_x = s_x;
+	old_include_y = s_y;
+	while(!done)
+	{
+		int x1 = kushal_board[old_include_x][old_include_y].up.end_x;
+		int y1 = kushal_board[old_include_x][old_include_y].up.end_y;
+		if (kushal_board[old_include_x][old_include_y].up.distance + kushal_distance_array[old_include_x][old_include_y] < kushal_distance_array[x1][y1])
+		{
+
+		}
+	}
+}
 
 task main()
 {
