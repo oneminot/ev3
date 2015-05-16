@@ -14,6 +14,15 @@ const int updownleftright = 4;
 const int kushal_production_sleep_time = 100;
 
 bool have_we_visited_square[kushal_length][kushal_width];
+int direction_counter;
+char kushal_direction_array[50];
+void set_kushal_direction_array_to_input()
+{
+	for (int i = 0; i < 50; i++)
+	{
+		kushal_direction_array[i] = 'x';
+	}
+}
 
 struct basic_square
 {
@@ -35,7 +44,6 @@ void Dijkstras(int s_x, int s_y, int e_x, int e_y)
 {
 	bool done = false;
 	int lowest, new_include_x, new_include_y, old_include_x, old_include_y;
-	int direction_counter;
 	int kushal_distance_array[kushal_length][kushal_width];
 	basic_square kushal_from_array[kushal_length][kushal_width];
 	bool kushal_include[kushal_length][kushal_width];
@@ -55,11 +63,98 @@ void Dijkstras(int s_x, int s_y, int e_x, int e_y)
 	old_include_y = s_y;
 	while(!done)
 	{
-		int x1 = kushal_board[old_include_x][old_include_y].up.end_x;
-		int y1 = kushal_board[old_include_x][old_include_y].up.end_y;
-		if (kushal_board[old_include_x][old_include_y].up.distance + kushal_distance_array[old_include_x][old_include_y] < kushal_distance_array[x1][y1])
+		int x1 = kushal_board[old_include_x][old_include_y].kushal_up.end_x;
+		int y1 = kushal_board[old_include_x][old_include_y].kushal_up.end_y;
+		if (kushal_board[old_include_x][old_include_y].kushal_up.distance + kushal_distance_array[old_include_x][old_include_y] < kushal_distance_array[x1][y1])
 		{
+			kushal_distance_array[x1][y1] = kushal_board[old_include_x][old_include_y].kushal_up.distance + kushal_distance_array[old_include_x][old_include_y];
+			kushal_from_array[x1][y1].x = old_include_x;
+			kushal_from_array[x1][y1].y = old_include_y;
+		}
+		int x2 = kushal_board[old_include_x][old_include_y].kushal_down.end_x;
+		int y2 = kushal_board[old_include_x][old_include_y].kushal_down.end_y;
+		if (kushal_board[old_include_x][old_include_y].kushal_down.distance + kushal_distance_array[old_include_x][old_include_y] < kushal_distance_array[x2][y2])
+		{
+			kushal_distance_array[x2][y2] = kushal_board[old_include_x][old_include_y].kushal_down.distance + kushal_distance_array[old_include_x][old_include_y];
+			kushal_from_array[x2][y2].x = old_include_x;
+			kushal_from_array[x2][y2].y = old_include_y;
+		}
+		int x3 = kushal_board[old_include_x][old_include_y].kushal_left.end_x;
+		int y3 = kushal_board[old_include_x][old_include_y].kushal_left.end_y;
+		if (kushal_board[old_include_x][old_include_y].kushal_left.distance + kushal_distance_array[old_include_x][old_include_y] < kushal_distance_array[x3][y3])
+		{
+			kushal_distance_array[x3][y3] = kushal_board[old_include_x][old_include_y].kushal_left.distance + kushal_distance_array[old_include_x][old_include_y];
+			kushal_from_array[x3][y3].x = old_include_x;
+			kushal_from_array[x3][y3].y = old_include_y;
+		}
+		int x4 = kushal_board[old_include_x][old_include_y].kushal_right.end_x;
+		int y4 = kushal_board[old_include_x][old_include_y].kushal_right.end_y;
+		if (kushal_board[old_include_x][old_include_y].kushal_right.distance + kushal_distance_array[old_include_x][old_include_y] < kushal_distance_array[x4][y4])
+		{
+			kushal_distance_array[x4][y4] = kushal_board[old_include_x][old_include_y].kushal_right.distance + kushal_distance_array[old_include_x][old_include_y];
+			kushal_from_array[x4][y4].x = old_include_x;
+			kushal_from_array[x4][y4].y = old_include_y;
+		}
+		lowest = 999;
+		new_include_x = 99;
+		new_include_y = 99;
+		for (int x = 0; x < kushal_length; x++)
+		{
+			for (int y = 0; y < kushal_width; y++)
+			{
+				if(kushal_include[x][y] == false)
+				{
+					if (lowest > kushal_distance_array[x][y])
+					{
+						lowest = kushal_distance_array[x][y];
+						new_include_x = x;
+						new_include_y = y;
+					}
+				}
+			}
+		}
+		if (lowest == 999)
+		{
+			done = true;
+			direction_counter = 0;
 
+		}
+
+		kushal_include[new_include_x][new_include_y] = true;
+		old_include_x = new_include_x;
+		old_include_y = new_include_y;
+		if (new_include_x == e_x && new_include_y == e_y)
+		{
+			done = true;
+			direction_counter = 0;
+			while (kushal_from_array[new_include_x][new_include_y].x != -1)
+			{
+				if (new_include_y - kushal_from_array[new_include_x][new_include_y].y == 0)
+				{
+					if (new_include_x - kushal_from_array[new_include_x][new_include_y].x > 0)
+					{
+						kushal_direction_array[direction_counter] = 'R';
+					}
+					else
+					{
+						kushal_direction_array[direction_counter] = 'L';
+					}
+				}
+				else if (new_include_y - kushal_from_array[new_include_x][new_include_y].y > 0)
+				{
+					kushal_direction_array[direction_counter] = 'D';
+				}
+				else
+				{
+					kushal_direction_array[direction_counter] = 'U';
+				}
+				direction_counter++;
+				int temp1, temp2;
+				temp1 = kushal_from_array[new_include_x][new_include_y].x;
+				temp2 = kushal_from_array[new_include_x][new_include_y].y;
+				new_include_x = temp1;
+				new_include_y = temp2;
+			}
 		}
 	}
 }
@@ -132,12 +227,12 @@ task main()
 			if (kushal_moves[0] == true)
 			{
 				// can go up
-				kushal_board[i][j].kushal_up.end_y = j + 1;
+				kushal_board[i][j].kushal_up.end_y = j - 1;
 			}
 			if (kushal_moves[1] == true)
 			{
 				// can go down
-				kushal_board[i][j].kushal_down.end_y = j - 1;
+				kushal_board[i][j].kushal_down.end_y = j + 1;
 			}
 			if (kushal_moves[2] == true)
 			{
@@ -152,4 +247,6 @@ task main()
 		}
 	}
 	// we have our boards built completely
+	Dijkstras(0, 0, 4, 2);
+	sleep(kushal_production_sleep_time);
 }
